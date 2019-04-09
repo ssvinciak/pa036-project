@@ -1,0 +1,11 @@
+Stiahnite si data.sql ktory vytvori v microsoft sql databazi tabulku weather a nainsertuje tam vsetky data.
+navod na instalaciu mssql server na linux https://docs.microsoft.com/en-us/sql/linux/quickstart-install-connect-ubuntu?view=sql-server-2017
+Ja mam verziu Express.
+Pre vytvorenie tabulky weather a nainsertovanie dat treba spustit tento command:
+sqlcmd -S localhost -U vaseMeno -P 'vaseHeslo' -i cestaKuSqlku
+U mna ten insert trval asi 3 minuty.
+Btw ked som isiel podla navodu na instalaciu servera tak ako vaseMeno som mal nastavene SA
+
+na windows som skusal Express verziu z tadeto https://www.microsoft.com/cs-cz/sql-server/sql-server-downloads
+Az by ste si to nainstalovali s defaultnymi nastaveniami tak mne fungoval tento prikaz z command lajny na nainsertovanie dat:
+sqlcmd -S localhost\SQLEXPRESS -i cestaKuSqlku
