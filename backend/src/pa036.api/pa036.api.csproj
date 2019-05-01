@@ -12,4 +12,8 @@
     <PackageReference Include="StackExchange.Redis" Version="2.0.601" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\pa036.db\pa036.db.csproj" />
+  </ItemGroup>
+
 </Project>

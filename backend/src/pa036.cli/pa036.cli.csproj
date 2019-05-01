@@ -5,4 +5,8 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\pa036.db\pa036.db.csproj" />
+  </ItemGroup>
+
 </Project>
