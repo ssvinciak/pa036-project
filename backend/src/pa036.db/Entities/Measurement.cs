@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace pa036.db.Entities
@@ -9,6 +10,8 @@ namespace pa036.db.Entities
         [Key]
         public int Key { get; set; }
 
-        // TODO: add other properties for
+        public DateTime Date { get; set; }
+
+        public float Temperature { get; set; }
     }
 }
