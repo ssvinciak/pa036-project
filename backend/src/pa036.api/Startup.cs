@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Cors.Internal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,6 +11,8 @@ namespace pa036.api
 {
     public class Startup
     {
+        private const string _policyName = "AllowOrigin";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -23,6 +26,19 @@ namespace pa036.api
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<DataDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("connectionStringMeasurements")));
+
+            services.AddCors(options => options.AddPolicy(_policyName, builder =>
+            {
+                builder.WithOrigins("http://localhost:3000").AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }));
+
+            services.Configure<MvcOptions>(options =>
+            {
+                options.Filters.Add(new CorsAuthorizationFilterFactory(_policyName));
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,6 +56,7 @@ namespace pa036.api
 
             app.UseHttpsRedirection();
             app.UseMvc();
+            app.UseCors(_policyName);
         }
     }
 }
