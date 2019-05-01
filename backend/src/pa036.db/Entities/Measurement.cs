@@ -6,9 +6,8 @@ namespace pa036.db.Entities
 {
     public class Measurement
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        public int Key { get; set; }
+        public int Id { get; set; }
 
         public DateTime MeasurementDate { get; set; }
 
