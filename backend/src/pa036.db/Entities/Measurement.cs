@@ -11,6 +11,6 @@ namespace pa036.db.Entities
 
         public DateTime MeasurementDate { get; set; }
 
-        public float Temperature { get; set; }
+        public double Temperature { get; set; }
     }
 }

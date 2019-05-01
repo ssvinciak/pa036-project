@@ -11,7 +11,8 @@ namespace pa036.cli
             Console.WriteLine("Hello World!");
             using (var context = new DataDbContext())
             {
-                Console.WriteLine(context.Measurements.First());
+                var value = context.Measurements.First();
+                Console.WriteLine(value.Id);
             }
         }
     }
