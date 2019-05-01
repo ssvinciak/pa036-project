@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Linq;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using pa036.db;
 
 namespace pa036.api.Controllers
 {
@@ -7,9 +11,14 @@ namespace pa036.api.Controllers
     public class DataController : ControllerBase
     {
         [HttpGet]
-        public IActionResult Get()
+        public JsonResult Get()
         {
-            return Ok("test");
+            using (var context = new DataDbContext())
+            {
+                var data = context.Measurements.Where(s => s.MeasurementDate.Year == 1985).ToList();
+                return new JsonResult(data);
+            }
+            
         }
     }
 }

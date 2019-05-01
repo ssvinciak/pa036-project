@@ -8,7 +8,7 @@ namespace pa036.db
         public DbSet<Measurement> Measurements { get; set; }
 
         public static string ConnectionString { get; } =
-            "Server=(localdb)\\mssqllocaldb;Database=pa036.dbo.Measurements;Trusted_Connection=True;";
+            "Server=(localdb)\\mssqllocaldb;Database=pa036;Trusted_Connection=True; Integrated Security=true;";
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

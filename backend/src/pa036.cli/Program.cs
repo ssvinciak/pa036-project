@@ -13,6 +13,7 @@ namespace pa036.cli
             {
                 var value = context.Measurements.First();
                 Console.WriteLine(value.Id);
+                Console.ReadKey();
             }
         }
     }
