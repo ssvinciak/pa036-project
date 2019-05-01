@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using pa036.db.Entities;
+using pa036.db.DataDbInitializer;
 
 namespace pa036.db
 {
@@ -7,10 +8,7 @@ namespace pa036.db
     {
         public DataDbContext()
         {
-            // TODO: 
-            // 2 options for default data
-            // 1. here add code for parsing data from csv and store to db
-            // 2. add migration with data
+            Database.SetInitializer(new DataDbInitializer());
         }
 
         public DbSet<Measurement> Measurements { get; set; }
