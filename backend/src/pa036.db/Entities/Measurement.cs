@@ -10,7 +10,7 @@ namespace pa036.db.Entities
         [Key]
         public int Key { get; set; }
 
-        public DateTime Date { get; set; }
+        public DateTime MeasurementDate { get; set; }
 
         public float Temperature { get; set; }
     }
