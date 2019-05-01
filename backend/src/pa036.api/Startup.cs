@@ -19,6 +19,9 @@ namespace pa036.api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            //var connection = @"(localdb)\mssqllocaldb;Database=pa036;Trusted_Connection=True;ConnectRetryCount=0";
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
