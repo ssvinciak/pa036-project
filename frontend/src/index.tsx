@@ -1,5 +1,4 @@
-import { ResultGraph } from './components/ResultGraph';
-//@ts-ignore
+ // @ts-ignore
 require.context('../public/', true);
 
 import { Provider } from 'react-redux';
@@ -8,9 +7,10 @@ import * as ReactDom from 'react-dom';
 import * as React from 'react';
 
 import { store } from './store/store';
+import { App } from './components/App';
 
 ReactDom.render(
   <Provider store={store}>
-    <ResultGraph />
+    <App />
   </Provider>,
   document.getElementById('app-root'));

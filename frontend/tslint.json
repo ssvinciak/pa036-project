@@ -63,6 +63,7 @@
       "trace"
     ],
     "no-construct": true,
+    "no-consecutive-blank-lines" : true,
     "no-debugger": true,
     "no-default-export": true,
     "no-shadowed-variable": true,

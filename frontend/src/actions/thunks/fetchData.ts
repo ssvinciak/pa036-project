@@ -1,4 +1,3 @@
-//import { List } from 'immutable';
 //import { DataModel } from '../../models/DbRecord';
 //
 //const getOptions = {
@@ -8,28 +7,24 @@
 //  },
 //};
 //
-//
-//
 //export interface IGetDependencies {
-//  readonly getFromServer: () => Promise<Response>;
+//  readonly getFromServer: (url: string) => Promise<Response>;
 //}
-//
-//export const getAllItemsActionCreator = (deps: IGetDependencies) => {
-//  return () =>
-//    async (): Promise<List<DataModel>> => {
-//      const response: Response = await deps.getFromServer();
-//      return getDataFromResponse(response);
-//    };
-//};
-//
 //
 //const getDataFromResponse = async (response: Response): Promise<DataModel[]> => {
 //  const jsonDataArray: Array<DataModel> = await response.json();
 //  return jsonDataArray;
 //};
 //
+//export const getAllItemsActionCreator = (deps: IGetDependencies) => {
+//  return (url: string) =>
+//    async (): Promise<Array<DataModel>> => {
+//      const response: Response = await deps.getFromServer(url);
+//      const data: DataModel[] = await getDataFromResponse(response);
+//      return await data;
+//    };
+//};
 //
 //export const fetchData = getAllItemsActionCreator({
-//  getFromServer: () => fetch('url goes here', getOptions),
+//  getFromServer: (url: string) => fetch(url, getOptions),
 //});
-//

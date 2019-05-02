@@ -1,14 +1,17 @@
 import '../sticky-footer.css';
 import * as React from 'react';
 import { StatelessComponent } from 'react';
-import { ResultGraph } from './ResultGraph';
+import { TimeSettings } from '../containers/TimeSettings';
+import { ResultGraph } from '../containers/ResultGraph';
 
 export const App: StatelessComponent = () => (
   <div>
     <div className="container">
-      <h1>Sorry, still in progress... :( </h1>
+      <TimeSettings />
+       {/* TODO: countdown*/}
       <ResultGraph />
     </div>
+
     <footer className="footer">
       <p>
         &copy; Team 11, PA036

@@ -1,3 +1,4 @@
-import { combineReducers } from 'redux';
-
-export const reducers = combineReducers({ });
+//import { combineReducers } from 'redux';
+//import { appStateReducer } from './appStateReducer';
+//
+//export const reducers = combineReducers();
