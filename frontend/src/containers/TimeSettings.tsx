@@ -7,7 +7,7 @@ import { setTimeSettings } from '../actions/setSettings';
 type TimeSettingsOwnProps = {};
 
 const mapDispatchToProps = (dispatch: Dispatch): TimeSettingsProps => ({
-  saveSettings: (fromTime: Date, toTime: string, reloadTime: number) => dispatch(setTimeSettings(fromTime, toTime, reloadTime)),
+  saveSettings: (fromTime: Date, toTime: Date, reloadTime: number) => dispatch(setTimeSettings(fromTime, toTime, reloadTime)),
 });
 
 const TimeSettingsContainer: React.ComponentClass<TimeSettingsOwnProps> =

@@ -2,7 +2,7 @@ export type AppAction = {
   readonly type: string;
   readonly payload: {
     fromTime: Date,
-    toTime: string,
+    toTime: Date,
     reloadTime: number,
   };
 }

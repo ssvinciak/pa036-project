@@ -5,12 +5,12 @@ import ReactDatePicker from 'react-datepicker';
 
 type TimeSettingsState = {
   readonly fromDateTime: Date,
-  readonly toDateTime: string,
+  readonly toDateTime: Date,
   readonly reloadTime: number,
 };
 
 export type TimeSettingsProps = {
-  readonly saveSettings: (fromTime: Date, toTime: string, reloadTime: number) => AppAction;
+  readonly saveSettings: (fromTime: Date, toTime: Date, reloadTime: number) => AppAction;
 };
 
 export class TimeSettings extends React.PureComponent<TimeSettingsProps, TimeSettingsState> {
@@ -18,8 +18,8 @@ export class TimeSettings extends React.PureComponent<TimeSettingsProps, TimeSet
     super(props);
     this.state = {
       fromDateTime: new Date(),
-      toDateTime: 'new Date()',
-      reloadTime: 10,
+      toDateTime: new Date(),
+      reloadTime: 2,
     }
   }
 
@@ -30,9 +30,8 @@ export class TimeSettings extends React.PureComponent<TimeSettingsProps, TimeSet
   };
 
   _updateToDateTime = (date: Date): void => {
-    const datetime = date.toDateString();
     this.setState(() => ({
-      toDateTime: datetime,
+      toDateTime: date,
     }));
   };
 
@@ -62,8 +61,9 @@ export class TimeSettings extends React.PureComponent<TimeSettingsProps, TimeSet
           <label>Finish time:</label>
           <ReactDatePicker
             onChange={this._updateToDateTime}
-            selected={new Date()}
+            selected={this.state.toDateTime}
             minDate={this.state.fromDateTime}
+            maxDate={new Date()}
           />
         </div>
 
@@ -72,7 +72,7 @@ export class TimeSettings extends React.PureComponent<TimeSettingsProps, TimeSet
           <input
             type="number"
             id="reloadTime"
-            placeholder="2"
+            placeholder={this.state.reloadTime.toString()}
             required
             onChange={this._updateReloadTime}
             min={2}

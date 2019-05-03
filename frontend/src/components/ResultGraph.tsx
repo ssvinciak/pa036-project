@@ -6,7 +6,7 @@ import { DataModel } from '../models/DbRecord';
 
 export type ResultGraphOwnProps = {
   fromTime: Date,
-  toTime: string,
+  toTime: Date,
   reloadTime: number,
 };
 

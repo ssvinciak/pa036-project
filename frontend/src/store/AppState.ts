@@ -1,5 +1,5 @@
 export type AppState = {
   readonly fromTime: Date;
-  readonly toTime: string;
+  readonly toTime: Date;
   readonly reloadTime: number;
 }

@@ -10,8 +10,8 @@ import { appStateReducer } from '../reducers/appStateReducer';
 
 export const preloadedState: AppState = {
   fromTime: new Date(),
-  toTime: '2001-01-01 00:00',
-  reloadTime: 5000,
+  toTime: new Date(),
+  reloadTime: 2,
 };
 
 export const store = createStore(
