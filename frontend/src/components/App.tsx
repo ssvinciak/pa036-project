@@ -6,12 +6,10 @@ import { ResultGraph } from '../containers/ResultGraph';
 
 export const App: StatelessComponent = () => (
   <div>
-    <div className="container">
-      <TimeSettings />
-       {/* TODO: countdown*/}
-      <ResultGraph />
+    <div>
+      <TimeSettings/>
+      <ResultGraph/>
     </div>
-
     <footer className="footer">
       <p>
         &copy; Team 11, PA036

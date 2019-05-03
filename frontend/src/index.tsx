@@ -1,16 +1,16 @@
- // @ts-ignore
+// @ts-ignore
 require.context('../public/', true);
 
 import { Provider } from 'react-redux';
-import '../node_modules/bootstrap/dist/css/bootstrap.css';
 import * as ReactDom from 'react-dom';
 import * as React from 'react';
+import 'react-datepicker/dist/react-datepicker.css';
 
-import { store } from './store/store';
 import { App } from './components/App';
+import { store } from './store/store';
 
 ReactDom.render(
   <Provider store={store}>
-    <App />
+     <App />
   </Provider>,
   document.getElementById('app-root'));

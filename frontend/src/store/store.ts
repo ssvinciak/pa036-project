@@ -9,7 +9,7 @@ import { AppState } from './AppState';
 import { appStateReducer } from '../reducers/appStateReducer';
 
 export const preloadedState: AppState = {
-  fromTime: '2000-01-01 00:00',
+  fromTime: new Date(),
   toTime: '2001-01-01 00:00',
   reloadTime: 5000,
 };

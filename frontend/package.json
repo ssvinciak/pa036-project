@@ -17,9 +17,9 @@
     "tslint": "tslint --project tsconfig.json -e \"./node_modules/**\" \"./**/*.ts?(x)\""
   },
   "dependencies": {
-    "@syncfusion/ej2": "^17.1.43",
+    "@syncfusion/ej2-react-base": "17.1.42",
     "@syncfusion/ej2-react-calendars": "^17.1.43",
-    "bootstrap": "^3.4.1",
+    "@types/node": "^11.13.9",
     "class-names": "^1.0.0",
     "classnames": "latest",
     "prop-types": "^15.7.2",
@@ -50,7 +50,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "clean-webpack-plugin": "^0.1.19",
-    "css-loader": "^1.0.0",
+    "css-loader": "^1.0.1",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^17.0.0",
     "eslint-loader": "^2.1.0",

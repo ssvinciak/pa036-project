@@ -2,21 +2,30 @@ import * as React from 'react';
 import { AppAction } from '../actions/AppAction';
 import ReactDatePicker from 'react-datepicker';
 
+
 type TimeSettingsState = {
-  readonly fromDateTime: string,
+  readonly fromDateTime: Date,
   readonly toDateTime: string,
   readonly reloadTime: number,
 };
 
 export type TimeSettingsProps = {
-  readonly saveSettings: (fromTime: string, toTime: string, reloadTime: number) => AppAction;
+  readonly saveSettings: (fromTime: Date, toTime: string, reloadTime: number) => AppAction;
 };
 
 export class TimeSettings extends React.PureComponent<TimeSettingsProps, TimeSettingsState> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      fromDateTime: new Date(),
+      toDateTime: 'new Date()',
+      reloadTime: 10,
+    }
+  }
+
   _updateFromDateTime = (date: Date): void => {
-    const datetime = date.toDateString();
     this.setState(() => ({
-      fromDateTime: datetime,
+      fromDateTime: date,
     }));
   };
 
@@ -41,33 +50,32 @@ export class TimeSettings extends React.PureComponent<TimeSettingsProps, TimeSet
 
   render(): React.ReactNode {
     return (
-      <form>
+      <div>
         <div>
           <label>Begin time:</label>
-          <div className='datepicker-control-section'>
-            <ReactDatePicker
-              onChange={this._updateFromDateTime}
-              selected={new Date()}
-            />
-          </div>
-          <br/>
+          <ReactDatePicker
+            onChange={this._updateFromDateTime}
+            selected={this.state.fromDateTime}
+            maxDate={new Date()}
+          />
+          <br />
           <label>Finish time:</label>
-          <div className='datepicker-control-section'>
-            <ReactDatePicker
-              onChange={this._updateToDateTime}
-              selected={new Date()}
-            />
-          </div>
+          <ReactDatePicker
+            onChange={this._updateToDateTime}
+            selected={new Date()}
+            minDate={this.state.fromDateTime}
+          />
         </div>
 
         <div>
-          <label>Data from date and time: (sec)</label>
+          <label>Reload time: (sec)</label>
           <input
             type="number"
             id="reloadTime"
             placeholder="2"
             required
             onChange={this._updateReloadTime}
+            min={2}
           />
         </div>
         <button
@@ -75,7 +83,7 @@ export class TimeSettings extends React.PureComponent<TimeSettingsProps, TimeSet
         >
           Submit
         </button>
-      </form>
+      </div>
     );
   }
 }

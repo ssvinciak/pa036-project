@@ -1,7 +1,7 @@
 export type AppAction = {
   readonly type: string;
   readonly payload: {
-    fromTime: string,
+    fromTime: Date,
     toTime: string,
     reloadTime: number,
   };

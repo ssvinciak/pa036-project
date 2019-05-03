@@ -5,7 +5,7 @@ import {
 import { DataModel } from '../models/DbRecord';
 
 export type ResultGraphOwnProps = {
-  fromTime: string,
+  fromTime: Date,
   toTime: string,
   reloadTime: number,
 };
@@ -63,7 +63,7 @@ export class ResultGraph extends React.PureComponent<ResultGraphOwnProps, Result
           values: convertToDataModel(json),
         })));
       console.log(this.state.values);
-    }, this.props.reloadTime);
+    }, 200000);
   }
 
   render(): React.ReactNode {
@@ -74,7 +74,7 @@ export class ResultGraph extends React.PureComponent<ResultGraphOwnProps, Result
         data={this.state.values}
         margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
       >
-        <XAxis dataKey="dateTime"  />
+        <XAxis dataKey="dateTime" />
         <YAxis />
         <CartesianGrid strokeDasharray="3 3" />
         <Tooltip />
