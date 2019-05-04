@@ -4,7 +4,7 @@ import {
 } from 'recharts';
 import { DataModel } from '../models/DbRecord';
 
-const dateOptions = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+const dateOptions = {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'};
 
 const formatDate = (date: any) => {
   return new Date(date).toLocaleDateString('cs-CZ', dateOptions);
@@ -69,12 +69,13 @@ export class ResultGraph extends React.PureComponent<ResultGraphProps, ResultGra
   }
 
   render(): React.ReactNode {
+    console.log(this.props);
     return (
       <LineChart
         width={600}
         height={300}
         data={this.state.values}
-        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+        margin={{top: 5, right: 30, left: 20, bottom: 5}}
       >
         <XAxis dataKey="dateTime" />
         <YAxis />
@@ -85,7 +86,7 @@ export class ResultGraph extends React.PureComponent<ResultGraphProps, ResultGra
           type="monotone"
           dataKey="value"
           stroke="#8884d8"
-          activeDot={{ r: 8 }}
+          activeDot={{r: 8}}
         />
       </LineChart>
     );

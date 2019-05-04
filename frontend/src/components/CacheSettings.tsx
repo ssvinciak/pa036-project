@@ -29,28 +29,42 @@ export class CacheSettings extends React.PureComponent<CacheSettingsProps, Cache
     this.props.saveSettings(this.state.efCache_On, this.state.redisCache_On);
   };
 
+  _switchEfCache = () => {
+    this.setState(prevState => ({
+      ...prevState,
+      efCache_On: !prevState.efCache_On,
+    }));
+  };
+
+  _switchRedisCache = () => {
+    this.setState(prevState => ({
+      ...prevState,
+      redisCache_On: !prevState.redisCache_On,
+    }));
+  };
+
   render(): React.ReactNode {
     return (
-      <div onChange={this._save}>
-        {/*<div>*/}
-          {/*<input*/}
-            {/*type="checkbox"*/}
-            {/*defaultChecked={defaultEFCache}*/}
-            {/*onChange={this._switchEfCache}*/}
-          {/*>*/}
-            {/*Use EF Cache*/}
-          {/*</input>*/}
-        {/*</div>*/}
-        {/*<div>*/}
-          {/*<input*/}
-            {/*type="checkbox"*/}
-            {/*defaultChecked={defaultRedisCache}*/}
-            {/*onChange={this._switchRedisCache}*/}
-          {/*>*/}
-            {/*Use Redis Cache*/}
-          {/*</input>*/}
-        {/*</div>*/}
-      </div>
+      <form id={'cacheSettings'} onChange={this._save}>
+        <div>
+          <label>Turn EF Cache ON:</label>
+          <input
+            form={'cacheSettings'}
+            type="checkbox"
+            defaultChecked={defaultEFCache}
+            onChange={this._switchEfCache}
+          />
+        </div>
+        <div>
+          <label>Turn Redis Cache ON:</label>
+          <input
+            form={'cacheSettings'}
+            type="checkbox"
+            defaultChecked={defaultRedisCache}
+            onChange={this._switchRedisCache}
+          />
+        </div>
+      </form>
     );
   }
 }

@@ -1,6 +1,8 @@
 import * as React from 'react';
 import {
-  defaultFromDate, defaultRedisCache,
+  defaultEFCache,
+  defaultFromDate,
+  defaultRedisCache,
   defaultReloadTime,
   defaultToDate,
 } from '../constants/defaultTimeSettings';
@@ -11,7 +13,7 @@ import {
   redisOff_efOff,
   redisOff_efOn,
   redisOn_efOff,
-  redisOn_efOn
+  redisOn_efOn,
 } from '../constants/cacheVersions';
 
 type AppState = {
@@ -30,7 +32,7 @@ export class App extends React.PureComponent<{}, AppState> {
     toDate: defaultToDate,
     reloadTime: defaultReloadTime,
     cacheRedis_on: defaultRedisCache,
-    cacheEF_on: defaultRedisCache,
+    cacheEF_on: defaultEFCache,
   };
 
   _setTimeSettings = (fromDate: Date, toDate: Date, reloadTime: number) => {
