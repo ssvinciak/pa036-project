@@ -11,7 +11,7 @@ namespace pa036.api.Controllers
     [ApiController]
     public class DataController : ControllerBase
     {
-        private DataService _dataService = new DataService();
+        private readonly DataService _dataService = new DataService();
 
         [HttpGet]
         public JsonResult Get(int cacheType, DateTime from, DateTime to)

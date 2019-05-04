@@ -17,7 +17,7 @@ namespace pa036.api.Redis
                     {
                         if (_instance == null || !_instance.IsConnected)
                         {
-                            _instance = ConnectionMultiplexer.Connect("localhost");
+                            _instance = ConnectionMultiplexer.Connect(RedisConstants.ServerUrl);
                         }
                     }
                 }
@@ -29,6 +29,13 @@ namespace pa036.api.Redis
         public static IDatabase GetDatabase()
         {
             return Instance?.GetDatabase();
+        }
+
+        public static void RemoveCachedKeys()
+        {
+            var db = GetDatabase();
+            db.KeyDelete(RedisConstants.EFCacheRedis_CacheKey);
+            db.KeyDelete(RedisConstants.NoEFCacheRedis_CacheKey);
         }
     }
 }

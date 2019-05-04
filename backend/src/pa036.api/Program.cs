@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using pa036.api.Redis;
 
 namespace pa036.api
 {
@@ -7,6 +8,7 @@ namespace pa036.api
     {
         public static void Main(string[] args)
         {
+            RedisManager.RemoveCachedKeys();
             CreateWebHostBuilder(args).Build().Run();
         }
 

@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using pa036.api.Redis;
-using pa036.api.Utils;
 using pa036.db;
 using pa036.db.Models;
 using System;
@@ -12,9 +11,6 @@ namespace pa036.api.Services
 {
     public class DataService
     {
-        private readonly string _cacheKeyWithEFWithRedis = CacheTypes.EFCacheRedis.ToString();
-        private readonly string _cacheKeyNoEFWithRedis = CacheTypes.EFNoCacheRedis.ToString();
-
         public List<Measurement> GetDataWithEFCacheNoRedis(DateTime from, DateTime to)
         {
             using (var context = new DataDbContext())
@@ -41,7 +37,7 @@ namespace pa036.api.Services
         public List<Measurement> GetDataWithEFCacheWithRedis(DateTime from, DateTime to)
         {
             List<Measurement> cached = null;
-            string cacheKey = _cacheKeyWithEFWithRedis;
+            string cacheKey = RedisConstants.EFCacheRedis_CacheKey;
             using (var context = new DataDbContext())
             {
                 if (!RedisManager.GetDatabase().KeyExists(cacheKey))
@@ -68,19 +64,21 @@ namespace pa036.api.Services
                         var newCache = oldcache.SkipWhile(o => o.MeasurementDate < from).ToList();
                         newCache.AddRange(newData);
                         RedisManager.GetDatabase().StringSet(cacheKey, JsonConvert.SerializeObject(newCache));
+
                         data = newCache;
                     }
                     cached = data;
                 }
             }
 
+            SetKeyExpiration(cacheKey);
             return cached;
         }
 
         public List<Measurement> GetDataNoEFCacheWithRedis(DateTime from, DateTime to)
         {
             List<Measurement> cached;
-            string cacheKey = _cacheKeyNoEFWithRedis;
+            string cacheKey = RedisConstants.NoEFCacheRedis_CacheKey;
             using (var context = new DataDbContext())
             {
                 if (!RedisManager.GetDatabase().KeyExists(cacheKey))
@@ -115,7 +113,13 @@ namespace pa036.api.Services
                 }
             }
 
+            SetKeyExpiration(cacheKey);
             return cached;
+        }
+
+        private void SetKeyExpiration(string cacheKey)
+        {
+            RedisManager.GetDatabase().KeyExpire(cacheKey, new TimeSpan(0, 5, 0));
         }
     }
 }
