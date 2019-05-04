@@ -2,9 +2,9 @@
 
 namespace pa036.api.Redis
 {
-    public class RedisManager
+    public sealed class RedisManager
     {
-        private static ConnectionMultiplexer _instance;
+        private static ConnectionMultiplexer _instance = null;
         private static readonly object _lockObject = new object();
 
         public static ConnectionMultiplexer Instance
@@ -28,7 +28,7 @@ namespace pa036.api.Redis
 
         public static IDatabase GetDatabase()
         {
-            return _instance?.GetDatabase();
+            return Instance?.GetDatabase();
         }
     }
 }
