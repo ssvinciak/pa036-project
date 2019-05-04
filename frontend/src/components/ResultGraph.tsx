@@ -4,6 +4,7 @@ import {
 } from 'recharts';
 import { DataModel } from '../models/DbRecord';
 
+<<<<<<< HEAD
 export type ResultGraphOwnProps = {
   fromTime: Date,
   toTime: Date,
@@ -15,6 +16,9 @@ type ResultGraphState = {
 };
 
 const dateOptions = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+=======
+const dateOptions = {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'};
+>>>>>>> master
 
 const formatDate = (date: any) => {
   return new Date(date).toLocaleDateString('cs-CZ', dateOptions);
@@ -28,42 +32,54 @@ const convertToDataModel = (data: any): DataModel[] => {
   }));
 };
 
-export class ResultGraph extends React.PureComponent<ResultGraphOwnProps, ResultGraphState> {
+type ResultGraphProps = {
+  fromTime: Date,
+  toTime: Date,
+  reloadTime: number,
+  cacheVersion: number,
+};
+
+type ResultGraphState = {
+  values: DataModel[];
+};
+
+export class ResultGraph extends React.PureComponent<ResultGraphProps, ResultGraphState> {
   static displayName = 'ResultGraph';
 
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      values: [],
-    };
-  }
+  state = {
+    values: [],
+  };
 
-  componentDidMount() {
-    // const url = 'https://localhost:44398/api/data/from=' + this.props.fromTime + '&to=' + this.props.toTime;
-    // setInterval(() => {
-    //   fetch(url, {
-    //     headers: {
-    //       'Access-Control-Allow-Origin': '*',
-    //     },
-    //   })
-    //     .then(res => res.json())
-    //     .then(json => this.setState(() => ({
-    //       values: json,
-    //     })));
-    //   console.log(this.state.values);
-    // }, this.props.reloadTime);
-    setInterval(() => {
-      fetch(`https://localhost:44398/api/data`, {
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-        },
-      })
-        .then(res => res.json())
-        .then(json => this.setState(() => ({
-          values: convertToDataModel(json),
-        })));
-      console.log(this.state.values);
-    }, 200000);
+  componentDidMount(): void {
+     const url = 'https://localhost:44398/api/data?cacheType='
+       + this.props.cacheVersion
+       + '&from='
+       + this.props.fromTime.toISOString()
+       + '&to='
+       + this.props.toTime.toISOString();
+     setInterval(() => {
+       fetch(url, {
+         headers: {
+           'Access-Control-Allow-Origin': '*',
+         },
+       })
+         .then(res => res.json())
+         .then(json => this.setState(() => ({
+           values: convertToDataModel(json),
+         })));
+     }, this.props.reloadTime * 1000);
+    //setInterval(() => {
+    //  fetch(`https://localhost:44398/api/data`, {
+    //    headers: {
+    //      'Access-Control-Allow-Origin': '*',
+    //    },
+    //  })
+    //    .then(res => res.json())
+    //    .then(json => this.setState(() => ({
+    //      values: convertToDataModel(json),
+    //    })));
+    //  console.log(this.state.values);
+    //}, 200000);
   }
 
   render(): React.ReactNode {
@@ -72,7 +88,7 @@ export class ResultGraph extends React.PureComponent<ResultGraphOwnProps, Result
         width={600}
         height={300}
         data={this.state.values}
-        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+        margin={{top: 5, right: 30, left: 20, bottom: 5}}
       >
         <XAxis dataKey="dateTime" />
         <YAxis />
@@ -83,7 +99,7 @@ export class ResultGraph extends React.PureComponent<ResultGraphOwnProps, Result
           type="monotone"
           dataKey="value"
           stroke="#8884d8"
-          activeDot={{ r: 8 }}
+          activeDot={{r: 8}}
         />
       </LineChart>
     );

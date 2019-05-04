@@ -1,9 +1,14 @@
 import * as React from 'react';
-import { AppAction } from '../actions/AppAction';
+import * as PropTypes from 'prop-types';
 import ReactDatePicker from 'react-datepicker';
-
+import {
+  defaultFromDate,
+  defaultReloadTime,
+  defaultToDate,
+} from '../constants/defaultTimeSettings';
 
 type TimeSettingsState = {
+<<<<<<< HEAD
   readonly fromDateTime: Date,
   readonly toDateTime: Date,
   readonly reloadTime: number,
@@ -22,15 +27,43 @@ export class TimeSettings extends React.PureComponent<TimeSettingsProps, TimeSet
       reloadTime: 2,
     }
   }
+=======
+  fromDateTime: Date,
+  toDateTime: Date,
+  reloadTime: number,
+};
+
+type TimeSettingsProps = {
+  saveSettings: (fromDate: Date, toDate: Date, reloadTime: number) => void,
+};
+
+export class TimeSettings extends React.PureComponent<TimeSettingsProps, TimeSettingsState> {
+  static displayName = 'TimeSettings';
+  static propTypes = {
+    saveSettings: PropTypes.func.isRequired,
+  };
+
+  state = {
+    fromDateTime: defaultFromDate,
+    toDateTime: defaultToDate,
+    reloadTime: defaultReloadTime,
+  };
+>>>>>>> master
 
   _updateFromDateTime = (date: Date): void => {
-    this.setState(() => ({
+    this.setState(prevState => ({
+      ...prevState,
       fromDateTime: date,
     }));
   };
 
   _updateToDateTime = (date: Date): void => {
+<<<<<<< HEAD
     this.setState(() => ({
+=======
+    this.setState(prevState => ({
+      ...prevState,
+>>>>>>> master
       toDateTime: date,
     }));
   };
@@ -38,12 +71,13 @@ export class TimeSettings extends React.PureComponent<TimeSettingsProps, TimeSet
   _updateReloadTime = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const datetime = event.target.value;
     const parsedValue = parseInt(datetime, 10);
-    this.setState(() => ({
-      reloadTime: parsedValue * 1000,
+    this.setState(prevState => ({
+      ...prevState,
+      reloadTime: parsedValue,
     }));
   };
 
-  _saveSettings = (): any => {
+  _save = (_: any): void => {
     this.props.saveSettings(this.state.fromDateTime, this.state.toDateTime, this.state.reloadTime);
   };
 
@@ -73,13 +107,17 @@ export class TimeSettings extends React.PureComponent<TimeSettingsProps, TimeSet
             type="number"
             id="reloadTime"
             placeholder={this.state.reloadTime.toString()}
+<<<<<<< HEAD
             required
+=======
+            required={true}
+>>>>>>> master
             onChange={this._updateReloadTime}
             min={2}
           />
         </div>
         <button
-          onClick={this._saveSettings}
+          onClick={this._save}
         >
           Submit
         </button>
