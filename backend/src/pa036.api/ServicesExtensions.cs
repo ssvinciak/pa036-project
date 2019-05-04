@@ -9,12 +9,21 @@ namespace pa036.api
     {
         public static void ConfigureCors(this IServiceCollection services)
         {
+            var allowedUrls = new string[]
+            {
+                "http://localhost:3000",
+                "http://www.localhost:3000",
+                "https://localhost:3000",
+                "https://www.localhost:3000"
+            };
+
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
                     builder => builder.WithOrigins("http://localhost:3000")
                     .AllowAnyMethod()
-                    .AllowAnyHeader());
+                    .AllowAnyHeader()
+                    .AllowCredentials());
             });
         }
 
