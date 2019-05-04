@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using pa036.db.Entities;
+using Microsoft.EntityFrameworkCore;
+using pa036.db.Models;
 
 namespace pa036.db
 {
