@@ -18,7 +18,6 @@ namespace pa036.api.Services
                 return context
                         .Measurements
                         .Where(s => s.MeasurementDate >= from && s.MeasurementDate <= to)
-                        .AsNoTracking()
                         .ToList();
             }
         }
@@ -30,6 +29,7 @@ namespace pa036.api.Services
                 return context
                         .Measurements
                         .Where(s => s.MeasurementDate >= from && s.MeasurementDate <= to)
+                        .AsNoTracking()
                         .ToList();
             }
         }
