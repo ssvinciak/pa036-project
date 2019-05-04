@@ -8,26 +8,6 @@ import {
 } from '../constants/defaultTimeSettings';
 
 type TimeSettingsState = {
-<<<<<<< HEAD
-  readonly fromDateTime: Date,
-  readonly toDateTime: Date,
-  readonly reloadTime: number,
-};
-
-export type TimeSettingsProps = {
-  readonly saveSettings: (fromTime: Date, toTime: Date, reloadTime: number) => AppAction;
-};
-
-export class TimeSettings extends React.PureComponent<TimeSettingsProps, TimeSettingsState> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      fromDateTime: new Date(),
-      toDateTime: new Date(),
-      reloadTime: 2,
-    }
-  }
-=======
   fromDateTime: Date,
   toDateTime: Date,
   reloadTime: number,
@@ -48,7 +28,6 @@ export class TimeSettings extends React.PureComponent<TimeSettingsProps, TimeSet
     toDateTime: defaultToDate,
     reloadTime: defaultReloadTime,
   };
->>>>>>> master
 
   _updateFromDateTime = (date: Date): void => {
     this.setState(prevState => ({
@@ -58,12 +37,8 @@ export class TimeSettings extends React.PureComponent<TimeSettingsProps, TimeSet
   };
 
   _updateToDateTime = (date: Date): void => {
-<<<<<<< HEAD
-    this.setState(() => ({
-=======
     this.setState(prevState => ({
       ...prevState,
->>>>>>> master
       toDateTime: date,
     }));
   };
@@ -107,11 +82,7 @@ export class TimeSettings extends React.PureComponent<TimeSettingsProps, TimeSet
             type="number"
             id="reloadTime"
             placeholder={this.state.reloadTime.toString()}
-<<<<<<< HEAD
-            required
-=======
             required={true}
->>>>>>> master
             onChange={this._updateReloadTime}
             min={2}
           />

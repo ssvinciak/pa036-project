@@ -4,21 +4,7 @@ import {
 } from 'recharts';
 import { DataModel } from '../models/DbRecord';
 
-<<<<<<< HEAD
-export type ResultGraphOwnProps = {
-  fromTime: Date,
-  toTime: Date,
-  reloadTime: number,
-};
-
-type ResultGraphState = {
-  values: DataModel[];
-};
-
 const dateOptions = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' };
-=======
-const dateOptions = {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'};
->>>>>>> master
 
 const formatDate = (date: any) => {
   return new Date(date).toLocaleDateString('cs-CZ', dateOptions);
@@ -51,23 +37,23 @@ export class ResultGraph extends React.PureComponent<ResultGraphProps, ResultGra
   };
 
   componentDidMount(): void {
-     const url = 'https://localhost:44398/api/data?cacheType='
-       + this.props.cacheVersion
-       + '&from='
-       + this.props.fromTime.toISOString()
-       + '&to='
-       + this.props.toTime.toISOString();
-     setInterval(() => {
-       fetch(url, {
-         headers: {
-           'Access-Control-Allow-Origin': '*',
-         },
-       })
-         .then(res => res.json())
-         .then(json => this.setState(() => ({
-           values: convertToDataModel(json),
-         })));
-     }, this.props.reloadTime * 1000);
+    const url = 'https://localhost:44398/api/data?cacheType='
+      + this.props.cacheVersion
+      + '&from='
+      + this.props.fromTime.toISOString()
+      + '&to='
+      + this.props.toTime.toISOString();
+    setInterval(() => {
+      fetch(url, {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+        },
+      })
+        .then(res => res.json())
+        .then(json => this.setState(() => ({
+          values: convertToDataModel(json),
+        })));
+    }, this.props.reloadTime * 1000);
     //setInterval(() => {
     //  fetch(`https://localhost:44398/api/data`, {
     //    headers: {
@@ -88,7 +74,7 @@ export class ResultGraph extends React.PureComponent<ResultGraphProps, ResultGra
         width={600}
         height={300}
         data={this.state.values}
-        margin={{top: 5, right: 30, left: 20, bottom: 5}}
+        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
       >
         <XAxis dataKey="dateTime" />
         <YAxis />
@@ -99,7 +85,7 @@ export class ResultGraph extends React.PureComponent<ResultGraphProps, ResultGra
           type="monotone"
           dataKey="value"
           stroke="#8884d8"
-          activeDot={{r: 8}}
+          activeDot={{ r: 8 }}
         />
       </LineChart>
     );
