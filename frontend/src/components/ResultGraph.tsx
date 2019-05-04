@@ -19,10 +19,8 @@ const convertToDataModel = (data: any): DataModel[] => {
 };
 
 type ResultGraphProps = {
-  fromTime: Date,
-  toTime: Date,
   reloadTime: number,
-  cacheVersion: number,
+  url: string,
 };
 
 type ResultGraphState = {
@@ -37,14 +35,8 @@ export class ResultGraph extends React.PureComponent<ResultGraphProps, ResultGra
   };
 
   componentDidMount(): void {
-    const url = 'https://localhost:44398/api/data?cacheType='
-      + this.props.cacheVersion
-      + '&from='
-      + this.props.fromTime.toISOString()
-      + '&to='
-      + this.props.toTime.toISOString();
     setInterval(() => {
-      fetch(url, {
+      fetch(this.props.url, {
         headers: {
           'Access-Control-Allow-Origin': '*',
         },
@@ -54,18 +46,6 @@ export class ResultGraph extends React.PureComponent<ResultGraphProps, ResultGra
           values: convertToDataModel(json),
         })));
     }, this.props.reloadTime * 1000);
-    //setInterval(() => {
-    //  fetch(`https://localhost:44398/api/data`, {
-    //    headers: {
-    //      'Access-Control-Allow-Origin': '*',
-    //    },
-    //  })
-    //    .then(res => res.json())
-    //    .then(json => this.setState(() => ({
-    //      values: convertToDataModel(json),
-    //    })));
-    //  console.log(this.state.values);
-    //}, 200000);
   }
 
   render(): React.ReactNode {

@@ -4,9 +4,10 @@ require.context('../public/', true);
 import * as ReactDom from 'react-dom';
 import * as React from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
+import 'bootstrap/dist/css/bootstrap.css';
 
 import { App } from './components/App';
 
 ReactDom.render(
-     <App/>,
+  <App />,
   document.getElementById('app-root'));

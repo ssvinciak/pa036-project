@@ -45,7 +45,9 @@ export class CacheSettings extends React.PureComponent<CacheSettingsProps, Cache
 
   render(): React.ReactNode {
     return (
-      <form id={'cacheSettings'} onChange={this._save}>
+      <div
+        id={'cacheSettings'}
+      >
         <div>
           <label>Turn EF Cache ON:</label>
           <input
@@ -64,7 +66,14 @@ export class CacheSettings extends React.PureComponent<CacheSettingsProps, Cache
             onChange={this._switchRedisCache}
           />
         </div>
-      </form>
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={this._save}
+        >
+          Submit
+        </button>
+      </div>
     );
   }
 }

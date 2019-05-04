@@ -60,24 +60,49 @@ export class TimeSettings extends React.PureComponent<TimeSettingsProps, TimeSet
     return (
       <div>
         <div>
-          <label>Begin time:</label>
-          <ReactDatePicker
-            onChange={this._updateFromDateTime}
-            selected={this.state.fromDateTime}
-            maxDate={new Date()}
-          />
-          <br />
-          <label>Finish time:</label>
-          <ReactDatePicker
-            onChange={this._updateToDateTime}
-            selected={this.state.toDateTime}
-            minDate={this.state.fromDateTime}
-            maxDate={new Date()}
-          />
+          <div className="input-group mb-3">
+            <div className="input-group-prepend">
+              <span
+                className="input-group-text label-md"
+                id="inputGroup-sizing-default"
+              >
+                Begin date
+              </span>
+            </div>
+            <ReactDatePicker
+              onChange={this._updateFromDateTime}
+              selected={this.state.fromDateTime}
+              maxDate={new Date()}
+              className="form-control"
+            />
+          </div>
+          <div className="input-group mb-3">
+            <div className="input-group-prepend">
+              <span
+                className="input-group-text"
+                id="inputGroup-sizing-default"
+              >
+                End date
+              </span>
+            </div>
+            <ReactDatePicker
+              onChange={this._updateToDateTime}
+              selected={this.state.toDateTime}
+              minDate={this.state.fromDateTime}
+              maxDate={new Date()}
+              className="form-control"
+            />
+          </div>
         </div>
-
-        <div>
-          <label>Reload time: (sec)</label>
+        <div className="input-group mb-3">
+          <div className="input-group-prepend">
+            <span
+              className="input-group-text"
+              id="inputGroup-sizing-default"
+            >
+              Reload Time (sec)
+            </span>
+          </div>
           <input
             type="number"
             id="reloadTime"
@@ -88,6 +113,8 @@ export class TimeSettings extends React.PureComponent<TimeSettingsProps, TimeSet
           />
         </div>
         <button
+          type="button"
+          className="btn btn-primary"
           onClick={this._save}
         >
           Submit
