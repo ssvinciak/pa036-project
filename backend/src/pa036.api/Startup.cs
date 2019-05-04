@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -38,8 +38,8 @@ namespace pa036.api
             }
 
             app.UseHttpsRedirection();
-            app.UseMvc();
             app.UseCors("CorsPolicy");
+            app.UseMvc();
         }
     }
 }
