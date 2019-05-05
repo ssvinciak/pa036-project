@@ -11,14 +11,14 @@ type GraphProps = {
 export const Graph: React.StatelessComponent<GraphProps> = ({ values }: GraphProps) => {
     return (
         <LineChart
-            width={800}
-            height={400}
+            width={900}
+            height={450}
             data={values}
             margin={{ right: 60 }}
         >
             <XAxis dataKey="dateTime" />
-            <YAxis />
-            <CartesianGrid strokeDasharray="3 3" />
+            <YAxis domain={[-10, 35]}/>
+            <CartesianGrid strokeDasharray="3 3"/>
             <Tooltip />
             <Legend />
             <Line

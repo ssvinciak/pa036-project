@@ -1,12 +1,12 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
-import ReactDatePicker from 'react-datepicker';
 import {
   defaultEFCache,
   defaultFromDate, defaultRedisCache,
   defaultReloadTime,
   defaultToDate,
 } from '../constants/defaultTimeSettings';
+import ReactDatePicker from 'react-datepicker';
 
 type TimeSettingsState = {
   fromDateTime: Date,
@@ -17,7 +17,7 @@ type TimeSettingsState = {
 };
 
 type TimeSettingsProps = {
-  saveSettings: (fromDate: Date, toDate: Date, reloadTime: number, redis_on: boolean, ef_on: boolean/*, wasSubmitted: boolean*/) => void,
+  saveSettings: (fromDate: Date, toDate: Date, reloadTime: number, redis_on: boolean, ef_on: boolean) => void,
 };
 
 export class TimeSettings extends React.PureComponent<TimeSettingsProps, TimeSettingsState> {
@@ -77,14 +77,15 @@ export class TimeSettings extends React.PureComponent<TimeSettingsProps, TimeSet
 
   render(): React.ReactNode {
     return (
+      <div className="card col-sm-4 col-md-3 col-lg-3 shadow date-time-settings">
+        <div className="card-body">
+          <h5 className="card-title">Date and Cache Settings</h5>
       <div>
         <div>
           <div className="input-group mb-3">
             <div>
               <label
-                // className="input-group-text label-md"
-                id={'input-name'}
-              // id="inputGroup-sizing-default"
+                className={'input-name'}
               >
                 Begin date
               </label>
@@ -93,16 +94,14 @@ export class TimeSettings extends React.PureComponent<TimeSettingsProps, TimeSet
               onChange={this._updateFromDateTime}
               selected={this.state.fromDateTime}
               maxDate={new Date()}
-              className="form-control"
-              id={'input-data'}
-              dateFormat="dd.MM.yyyy"
+              className="form-control input-date-picker"
+              dateFormat="dd. MM .yyyy"
             />
           </div>
           <div className="input-group mb-3">
-            <div >{/*className="input-group-prepend"*/}
+            <div>
               <label
-                // className="input-group-text"
-                id={'input-name'}
+                className={'input-name'}
               >
                 End date
               </label>
@@ -112,30 +111,27 @@ export class TimeSettings extends React.PureComponent<TimeSettingsProps, TimeSet
               selected={this.state.toDateTime}
               minDate={this.state.fromDateTime}
               maxDate={new Date()}
-              className="form-control"
-              id={'input-data'}
-              dateFormat="dd.MM.yyyy"
+              className="form-control input-date-picker"
+              dateFormat="dd. MM. yyyy"
             />
           </div>
         </div>
         <div className="input-group mb-3">
           <div className="input-group-prepend">
             <span
-              //className="input-group-text"
-              id={'input-name'}
+              className={'input-name'}
             >
               Reload Time (sec)
             </span>
           </div>
-          <div id={'input-data'}>
+          <div className="input-group">
             <input
               type="number"
-              id={'input-data'}
               placeholder={defaultReloadTime.toString()}
               required={true}
               onChange={this._updateReloadTime}
               min={2}
-              className="form-control"
+              className="form-control input-data"
             />
           </div>
         </div>
@@ -172,14 +168,17 @@ export class TimeSettings extends React.PureComponent<TimeSettingsProps, TimeSet
             Turn Redis Cache ON
           </label>
         </div>
+        <div className='submit-settings'>
         <button
           type="button"
           className="btn btn-primary"
-          id={'submit-settings'}
           onClick={this._save}
         >
           Submit
         </button>
+        </div>
+      </div>
+        </div>
       </div>
     );
   }

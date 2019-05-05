@@ -25,7 +25,7 @@ type ResultGraphWrapperProps = {
   cacheType: number,
 };
 
-type ResultGraphWraperState = {
+type ResultGraphWrapperState = {
   values: DataModel[],
   intervalId?: NodeJS.Timeout,
 };
@@ -33,10 +33,10 @@ type ResultGraphWraperState = {
 let from: Date;
 let to: Date;
 
-export class ResultGraphWrapper extends React.PureComponent<ResultGraphWrapperProps, ResultGraphWraperState> {
+export class ResultGraphWrapper extends React.PureComponent<ResultGraphWrapperProps, ResultGraphWrapperState> {
   static displayName = 'ResultGraph';
 
-  state: ResultGraphWraperState = {
+  state: ResultGraphWrapperState = {
     values: [],
   };
 
@@ -85,15 +85,15 @@ export class ResultGraphWrapper extends React.PureComponent<ResultGraphWrapperPr
   render(): React.ReactNode {
     if (!this.props.wasSubmitted) {
       return (
-        <div className="card col-sm-8 col-md-8 col-lg-8 text-center shadow" id="center-card">
-          <div className="card-body">
-            <h5 className="card-title">Please setup time and cache settings to obtain data.</h5>
+        <div className="card col-sm-7 col-md-7 col-lg-7 text-center shadow graph-card">
+          <div className="card-body card-body-text">
+            <h5 className="card-text">Please setup time and cache settings to display data.</h5>
           </div>
         </div>
       );
     }
     return (
-      <div className={'col-sm-8 col-md-9 col-lg-9'} >
+      <div className={'col-sm-8 col-md-8 col-lg-8 graph'} >
         <Graph values={this.state.values} />
       </div>
     );

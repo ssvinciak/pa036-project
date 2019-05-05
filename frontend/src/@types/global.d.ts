@@ -1,9 +1,6 @@
-import { OrderedMap } from 'immutable';
-import { DataModel } from '../models/DbRecord';
+export {} 
 
 declare global {
-  export type DataType = OrderedMap<string, DataModel>;
-
   interface Date {
     addDays(days: number): Date;
   }

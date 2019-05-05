@@ -60,29 +60,21 @@ export class App extends React.PureComponent<{}, AppState> {
   render(): React.ReactNode {
     return (
       <div>
-        <header className="header">
-          <h1>PA036 Project</h1>
-        </header>
+        <div className='navbar shadow-sm navbar-header align-items-center'>
+          <h1 >PA036 Project</h1>
+        </div>
         <div
-          className={'row'}
+          className="container-fluid row"
           id={'under-header'}
         >
-          <div className="card col-sm-4 col-md-3 col-lg-3 shadow">
-            <div className="card-body">
-              <h5 className="card-title">Date and Cache Settings</h5>
-              <TimeSettings saveSettings={this._setSettings} />
-            </div>
-          </div>
-          <div className="col-sm-8 col-md-9 col-lg-9" id={'right-side'}>
-            <ResultGraphWrapper
-              reloadTime={this.state.settings.reloadTime}
-              fromDate={this.state.settings.fromDate}
-              toDate={this.state.settings.toDate}
-              cacheType={this._getCacheVersion()}
-              wasSubmitted={this.state.wasSubmitted}
-            />
-          </div>
-
+          <TimeSettings saveSettings={this._setSettings} />
+          <ResultGraphWrapper
+            reloadTime={this.state.settings.reloadTime}
+            fromDate={this.state.settings.fromDate}
+            toDate={this.state.settings.toDate}
+            cacheType={this._getCacheVersion()}
+            wasSubmitted={this.state.wasSubmitted}
+          />
         </div>
         <footer className="footer">
           <p>

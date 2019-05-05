@@ -45,39 +45,52 @@ body {
   justify-content: center;
 }
 
-#input-name {
+.input-name {
   width: 150px;
   text-align: left;
 }
 
-#under-header {
-  position: relative;
-  top: 120px;
-  left: 5%;
-}
-
-#input-data {
+.input-data {
   width: 150px;
-  text-align: right;
+  padding-right: 38px;
 }
 
-#right-side {
-  float: right;
+.submit-settings {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
 }
 
-.form-control {
-  width: 200px;
-  text-align: right;
+.input-date-picker {
+  background-image: url("../public/calendar-solid.png");
+  background-repeat: no-repeat;
+  background-position: 90% 50%;
 }
 
-#center-card {
-  vertical-align: middle;
+.navbar-header {
+  background-color: #c6e4f5 !important;
 }
 
-#submit-settings {
+card {
+  display: inline-flex;
+}
+
+.card-body-text {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.graph {
   margin-top: 20px;
 }
 
-input[type=number]{
-  width: 150px;
+.date-time-settings {
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+.graph-card {
+  margin-top: 20px;
+  margin-left: 20px;
 }
