@@ -1,4 +1,5 @@
 ﻿using pa036.api.Utils;
+using System;
 
 namespace pa036.api.Redis
 {
@@ -11,5 +12,7 @@ namespace pa036.api.Redis
 
         public static readonly string EFCacheRedis_CacheKey = CacheTypes.EFCacheRedis.ToString();
         public static readonly string NoEFCacheRedis_CacheKey = CacheTypes.EFNoCacheRedis.ToString();
+
+        public static readonly TimeSpan CacheKeyExpirationTime = new TimeSpan(0, 5, 0);
     }
 }

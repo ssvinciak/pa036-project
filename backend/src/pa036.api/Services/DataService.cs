@@ -119,7 +119,7 @@ namespace pa036.api.Services
 
         private void SetKeyExpiration(string cacheKey)
         {
-            RedisManager.GetDatabase().KeyExpire(cacheKey, new TimeSpan(0, 5, 0));
+            RedisManager.GetDatabase().KeyExpire(cacheKey, RedisConstants.CacheKeyExpirationTime);
         }
     }
 }
