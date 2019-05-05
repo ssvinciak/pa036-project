@@ -1,17 +1,9 @@
 import * as React from 'react';
 import {
-  defaultEFCache,
   defaultFromDate,
-  defaultRedisCache,
   defaultReloadTime,
   defaultToDate,
 } from '../constants/defaultTimeSettings';
-import {
-  redisOff_efOff,
-  redisOff_efOn,
-  redisOn_efOff,
-  redisOn_efOn,
-} from '../constants/cacheVersions';
 import '../sticky-footer.css';
 import { TimeSettings } from './TimeSettings';
 import { ResultGraphWrapper } from './ResultGraph';
@@ -30,37 +22,37 @@ export class App extends React.PureComponent<{}, AppState> {
       fromDate: defaultFromDate,
       toDate: defaultToDate,
       reloadTime: defaultReloadTime,
-      redisCacheOn: defaultRedisCache,
-      efCacheOn: defaultEFCache,
+      // redisCacheOn: defaultRedisCache,
+      // efCacheOn: defaultEFCache,
+      cacheType: 1,
     },
     wasSubmitted: false,
   };
 
-  _setSettings = (fromDate: Date, toDate: Date, reloadTime: number, efCacheOn: boolean, redisCacheOn: boolean /*,wasSubmitted: boolean*/) => {
+  _setSettings = (fromDate: Date, toDate: Date, reloadTime: number, cacheType: number) => {
     this.setState((prevState) => ({
       ...prevState,
       settings: {
         fromDate,
         toDate,
         reloadTime,
-        efCacheOn,
-        redisCacheOn,
+        cacheType,
       },
       wasSubmitted: true,
     }));
   };
 
-  _getCacheVersion = (): number => {
-    if (this.state.settings.efCacheOn) {
-      return this.state.settings.redisCacheOn ? redisOn_efOn : redisOff_efOn;
-    }
-    return this.state.settings.redisCacheOn ? redisOn_efOff : redisOff_efOff;
-  };
+  // _getCacheVersion = (): number => {
+  //   if (this.state.settings.efCacheOn) {
+  //     return this.state.settings.redisCacheOn ? redisOn_efOn : redisOff_efOn;
+  //   }
+  //   return this.state.settings.redisCacheOn ? redisOn_efOff : redisOff_efOff;
+  // };
 
   render(): React.ReactNode {
     return (
       <div>
-        <div className='navbar shadow-sm navbar-header align-items-center'>
+        <div className="navbar shadow-sm navbar-header align-items-center">
           <h1 >PA036 Project</h1>
         </div>
         <div
@@ -72,7 +64,7 @@ export class App extends React.PureComponent<{}, AppState> {
             reloadTime={this.state.settings.reloadTime}
             fromDate={this.state.settings.fromDate}
             toDate={this.state.settings.toDate}
-            cacheType={this._getCacheVersion()}
+            cacheType={this.state.settings.cacheType}
             wasSubmitted={this.state.wasSubmitted}
           />
         </div>

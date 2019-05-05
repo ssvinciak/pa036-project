@@ -48,7 +48,11 @@ export class ResultGraphWrapper extends React.PureComponent<ResultGraphWrapperPr
       if (this.props.wasSubmitted) {
         const url = getTemperatureUrl(this.props.cacheType, from, to);
 
-        const data = await fetch(url);
+        const data = await fetch(url, {
+          headers: {
+            'Access-Control-Allow-Origin': "*"
+          },
+        });
         const json = await data.json();
         this.setState(() => ({
           values: convertToDataModel(json),

@@ -52,7 +52,6 @@ body {
 
 .input-data {
   width: 150px;
-  padding-right: 38px;
 }
 
 .submit-settings {
@@ -62,9 +61,16 @@ body {
 }
 
 .input-date-picker {
+  padding-right: 38px;
   background-image: url("../public/calendar-solid.png");
   background-repeat: no-repeat;
   background-position: 90% 50%;
+}
+
+.input-group-column {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 .navbar-header {

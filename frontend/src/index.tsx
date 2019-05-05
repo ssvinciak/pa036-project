@@ -6,6 +6,7 @@ import * as React from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import './utils/DateExtensions';
+import 'react-select';
 
 import { App } from './components/App';
 

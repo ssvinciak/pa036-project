@@ -17,8 +17,6 @@
     "tslint": "tslint --project tsconfig.json -e \"./node_modules/**\" \"./**/*.ts?(x)\""
   },
   "dependencies": {
-    "@syncfusion/ej2-react-base": "17.1.42",
-    "@syncfusion/ej2-react-calendars": "^17.1.43",
     "@types/bootstrap": "^4.3.0",
     "@types/node": "^11.13.9",
     "bootstrap": "^4.3.1",
@@ -29,6 +27,8 @@
     "react-countdown-now": "^2.1.0",
     "react-datepicker": "^2.5.0",
     "react-dom": "^16.8.6",
+    "react-dropdown": "^1.6.4",
+    "react-select": "^2.4.3",
     "recharts": "^1.5.0",
     "redux-devtools-extension": "^2.13.8",
     "redux-logger": "^3.0.6",
@@ -42,6 +42,7 @@
     "@types/react-datepicker": "^2.3.0",
     "@types/react-dom": "^16.8.4",
     "@types/react-redux": "^7.0.8",
+    "@types/react-select": "^2.0.17",
     "@types/recharts": "^1.1.16",
     "@types/redux-logger": "^3.0.7",
     "@types/webpack": "^4.4.10",
