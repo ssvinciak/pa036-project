@@ -15,7 +15,7 @@ import {
 import '../sticky-footer.css';
 import { TimeSettings } from './TimeSettings';
 import { ResultGraphWrapper } from './ResultGraph';
-import { AppSettings } from '../models/appSettings';
+import { AppSettings } from '../models/AppSettings';
 
 type AppState = {
   settings: AppSettings,
@@ -37,7 +37,6 @@ export class App extends React.PureComponent<{}, AppState> {
   };
 
   _setSettings = (fromDate: Date, toDate: Date, reloadTime: number, efCacheOn: boolean, redisCacheOn: boolean /*,wasSubmitted: boolean*/) => {
-    console.log("som tu");
     this.setState((prevState) => ({
       ...prevState,
       settings: {

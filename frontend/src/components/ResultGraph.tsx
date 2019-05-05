@@ -1,7 +1,4 @@
 import * as React from 'react';
-// import {
-//   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
-// } from 'recharts';
 import { DataModel } from '../models/DbRecord';
 import { getTemperatureUrl } from '../utils/ApiUrlUtils';
 import { Graph } from './Graph';
@@ -30,62 +27,59 @@ type ResultGraphWrapperProps = {
 
 type ResultGraphWraperState = {
   values: DataModel[],
-  reloadTime: number,
-  fromDate: Date,
-  toDate: Date,
-  wasSubmitted: boolean,
-  cacheType: number,
   intervalId?: NodeJS.Timeout,
 };
 
-let from = new Date();
-let to = new Date();
+let from: Date;
+let to: Date;
 
 export class ResultGraphWrapper extends React.PureComponent<ResultGraphWrapperProps, ResultGraphWraperState> {
   static displayName = 'ResultGraph';
 
-  state = {
+  state: ResultGraphWraperState = {
     values: [],
-    reloadTime: this.props.reloadTime,
-    fromDate: this.props.fromDate,
-    toDate: this.props.toDate,
-    wasSubmitted: this.props.wasSubmitted,
-    cacheType: this.props.cacheType,
   };
 
   componentDidMount(): void {
-    console.log(this.state);
+    console.log(this.props);
     console.log('graph did mount');
-
-    from = this.state.fromDate;
-    to = this.state.toDate;
-    console.log(from + "" + to);
 
     const intervalId = setInterval(async () => {
       if (this.props.wasSubmitted) {
-        const url = getTemperatureUrl(this.props.cacheType, this.state.fromDate, this.state.toDate);
+        const url = getTemperatureUrl(this.props.cacheType, from, to);
 
         const data = await fetch(url);
         const json = await data.json();
-        this.setState((prevState) => ({
+        this.setState(() => ({
           values: convertToDataModel(json),
-          fromDate: prevState.fromDate.addDays(1),
-          toDate: prevState.toDate.addDays(1),
         }));
+        from = from.addDays(1);
+        to = to.addDays(1);
       }
     }, this.props.reloadTime * 1000);
+
+    from = this.props.fromDate;
+    to = this.props.toDate;
 
     this.setState(() => ({
       intervalId,
     }));
   }
 
-  getDerivedStateFromProps(): void {
-
+  componentDidUpdate(prevProps: ResultGraphWrapperProps): void {
+    if (this.props.fromDate !== prevProps.fromDate
+      || this.props.toDate !== prevProps.toDate
+      || this.props.reloadTime !== prevProps.reloadTime
+      || this.props.cacheType !== prevProps.cacheType) {
+      from = this.props.fromDate;
+      to = this.props.toDate;
+    }
   }
 
   componentWillUnmount(): void {
-    clearTimeout(this.state.reloadTime);
+    if (this.state.intervalId != null) {
+      clearTimeout(this.state.intervalId);
+    }
   }
 
   render(): React.ReactNode {
