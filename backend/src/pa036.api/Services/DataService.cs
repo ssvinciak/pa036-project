@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using pa036.api.Redis;
+using pa036.api.Utils;
 using pa036.db;
 using pa036.db.Models;
 using System;
@@ -37,7 +38,7 @@ namespace pa036.api.Services
         public List<Measurement> GetDataWithEFCacheWithRedis(DateTime from, DateTime to)
         {
             List<Measurement> cached = null;
-            string cacheKey = RedisConstants.EFCacheRedis_CacheKey;
+            string cacheKey = RedisConstants.CacheKeys[RedisKeys.WithEf];
             using (var context = new DataDbContext())
             {
                 if (!RedisManager.GetDatabase().KeyExists(cacheKey))
@@ -78,7 +79,7 @@ namespace pa036.api.Services
         public List<Measurement> GetDataNoEFCacheWithRedis(DateTime from, DateTime to)
         {
             List<Measurement> cached;
-            string cacheKey = RedisConstants.NoEFCacheRedis_CacheKey;
+            string cacheKey = RedisConstants.CacheKeys[RedisKeys.NoEf];
             using (var context = new DataDbContext())
             {
                 if (!RedisManager.GetDatabase().KeyExists(cacheKey))
@@ -120,6 +121,41 @@ namespace pa036.api.Services
         private void SetKeyExpiration(string cacheKey)
         {
             RedisManager.GetDatabase().KeyExpire(cacheKey, RedisConstants.CacheKeyExpirationTime);
+        }
+
+        public List<Measurement> GetDataRedisSortedSet(DateTime from, DateTime to)
+        {
+            string cacheKey = RedisConstants.CacheKeys[RedisKeys.SortedSetRange];
+            if (!RedisManager.GetDatabase().KeyExists(cacheKey))
+            {
+                using (var context = new DataDbContext())
+                {
+                    var minDate = context.Measurements.Min(m => m.MeasurementDate);
+                    var maxDate = context.Measurements.Max(m => m.MeasurementDate);
+
+                    var allData = context.Measurements
+                        .Where(s => s.MeasurementDate >= minDate && s.MeasurementDate <= maxDate)
+                        .AsNoTracking()
+                        .ToList();
+
+                    foreach (var item in allData)
+                    {
+                        RedisManager.GetDatabase().SortedSetAdd(
+                            cacheKey,
+                            JsonConvert.SerializeObject(item),
+                            item.MeasurementDate.ToUnixSeconds()
+                        );
+                    }
+                }
+            }
+
+            var data = RedisManager.GetDatabase().SortedSetRangeByScore(
+                        cacheKey,
+                        DateTimeUtils.ToUnixSeconds(from),
+                        DateTimeUtils.ToUnixSeconds(to)
+            );
+
+            return data.Select(d => JsonConvert.DeserializeObject<Measurement>(d)).ToList();
         }
     }
 }
