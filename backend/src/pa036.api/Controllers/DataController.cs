@@ -16,19 +16,22 @@ namespace pa036.api.Controllers
         [HttpGet]
         public JsonResult Get(int cacheType, DateTime from, DateTime to)
         {
-            switch (cacheType)
+            switch ((CacheTestScenarious)cacheType)
             {
-                case (int)CacheTypes.EFNoCacheNoRedis:
+                case CacheTestScenarious.EFNoCacheNoRedis:
                     return GetEFNoCacheNoRedis(from, to);
 
-                case (int) CacheTypes.EFCacheNoRedis:
+                case CacheTestScenarious.EFCacheNoRedis:
                     return GetEFCacheNoRedis(from, to);
 
-                case (int)CacheTypes.EFNoCacheRedis:
+                case CacheTestScenarious.EFNoCacheRedis:
                     return GetNoEFCacheRedis(from, to);
 
-                case (int)CacheTypes.EFCacheRedis:
+                case CacheTestScenarious.EFCacheRedis:
                     return GetEFCacheRedis(from, to);
+
+                case CacheTestScenarious.SortedSetRange:
+                    return GetSortedSetRedis(from, to);
 
                 default:
                     throw new InvalidEnumArgumentException();
@@ -41,7 +44,7 @@ namespace pa036.api.Controllers
             var watch = System.Diagnostics.Stopwatch.StartNew();
             var data = _dataService.GetDataNoEFCacheNoRedis(from, to);
             watch.Stop();
-            var path = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, $"{CacheTypes.EFNoCacheNoRedis.ToString()}.txt");
+            var path = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, $"{CacheTestScenarious.EFNoCacheNoRedis.ToString()}.txt");
             using (StreamWriter sw = System.IO.File.AppendText(path))
             {
                 sw.WriteLine(watch.ElapsedMilliseconds);
@@ -55,7 +58,7 @@ namespace pa036.api.Controllers
             var watch = System.Diagnostics.Stopwatch.StartNew();
             var data = _dataService.GetDataWithEFCacheNoRedis(from, to);
             watch.Stop();
-            var path = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, $"{CacheTypes.EFCacheNoRedis}.txt");
+            var path = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, $"{CacheTestScenarious.EFCacheNoRedis}.txt");
             using (StreamWriter sw = System.IO.File.AppendText(path))
             {
                 sw.WriteLine(watch.ElapsedMilliseconds);
@@ -69,7 +72,7 @@ namespace pa036.api.Controllers
             var watch = System.Diagnostics.Stopwatch.StartNew();
             var data = _dataService.GetDataWithEFCacheWithRedis(from, to);
             watch.Stop();
-            var path = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, $"{CacheTypes.EFCacheRedis}.txt");
+            var path = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, $"{CacheTestScenarious.EFCacheRedis}.txt");
             using (StreamWriter sw = System.IO.File.AppendText(path))
             {
                 sw.WriteLine(watch.ElapsedMilliseconds);
@@ -82,7 +85,20 @@ namespace pa036.api.Controllers
             var watch = System.Diagnostics.Stopwatch.StartNew();
             var data = _dataService.GetDataNoEFCacheWithRedis(from, to);
             watch.Stop();
-            var path = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, $"{CacheTypes.EFNoCacheRedis}.txt");
+            var path = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, $"{CacheTestScenarious.EFNoCacheRedis}.txt");
+            using (StreamWriter sw = System.IO.File.AppendText(path))
+            {
+                sw.WriteLine(watch.ElapsedMilliseconds);
+            }
+            return new JsonResult(data);
+        }
+
+        private JsonResult GetSortedSetRedis(DateTime from, DateTime to)
+        {
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+            var data = _dataService.GetDataRedisSortedSet(from, to);
+            watch.Stop();
+            var path = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, $"{CacheTestScenarious.SortedSetRange}.txt");
             using (StreamWriter sw = System.IO.File.AppendText(path))
             {
                 sw.WriteLine(watch.ElapsedMilliseconds);

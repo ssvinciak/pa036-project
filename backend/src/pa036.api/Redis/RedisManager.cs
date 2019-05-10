@@ -34,8 +34,10 @@ namespace pa036.api.Redis
         public static void RemoveCachedKeys()
         {
             var db = GetDatabase();
-            db.KeyDelete(RedisConstants.EFCacheRedis_CacheKey);
-            db.KeyDelete(RedisConstants.NoEFCacheRedis_CacheKey);
+            foreach (var item in RedisConstants.CacheKeys)
+            {
+                db.KeyDelete(item.Value);
+            }
         }
     }
 }
