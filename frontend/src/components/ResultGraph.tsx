@@ -41,7 +41,6 @@ export class ResultGraphWrapper extends React.PureComponent<ResultGraphWrapperPr
   };
 
   componentDidMount(): void {
-    console.log(this.props);
     console.log('graph did mount');
 
     const intervalId = setInterval(async () => {

@@ -8,6 +8,7 @@ import '../sticky-footer.css';
 import { TimeSettings } from './TimeSettings';
 import { ResultGraphWrapper } from './ResultGraph';
 import { AppSettings } from '../models/AppSettings';
+import 'react-select';
 
 type AppState = {
   settings: AppSettings,
@@ -22,8 +23,6 @@ export class App extends React.PureComponent<{}, AppState> {
       fromDate: defaultFromDate,
       toDate: defaultToDate,
       reloadTime: defaultReloadTime,
-      // redisCacheOn: defaultRedisCache,
-      // efCacheOn: defaultEFCache,
       cacheType: 1,
     },
     wasSubmitted: false,
@@ -41,13 +40,6 @@ export class App extends React.PureComponent<{}, AppState> {
       wasSubmitted: true,
     }));
   };
-
-  // _getCacheVersion = (): number => {
-  //   if (this.state.settings.efCacheOn) {
-  //     return this.state.settings.redisCacheOn ? redisOn_efOn : redisOff_efOn;
-  //   }
-  //   return this.state.settings.redisCacheOn ? redisOn_efOff : redisOff_efOff;
-  // };
 
   render(): React.ReactNode {
     return (

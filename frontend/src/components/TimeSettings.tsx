@@ -7,15 +7,17 @@ import {
 } from '../constants/defaultTimeSettings';
 import ReactDatePicker from 'react-datepicker';
 import 'react-dropdown/style.css';
-import { cacheOptions } from '../constants/cacheVersions';
-import Select from 'react-select';
-import { Option } from 'react-select/lib/filters';
+import Slider from '@material-ui/lab/Slider/Slider';
+import { Button, Menu } from '@material-ui/core';
+import MenuItem from '@material-ui/core/MenuItem';
+// import {DateFormatInput} from 'material-ui-next-pickers'
 
 type TimeSettingsState = {
   fromDateTime: Date,
   toDateTime: Date,
   reloadTime: number,
   cacheType: number,
+  cacheOptionsVisible: boolean,
 };
 
 type TimeSettingsProps = {
@@ -33,6 +35,7 @@ export class TimeSettings extends React.PureComponent<TimeSettingsProps, TimeSet
     toDateTime: defaultToDate,
     reloadTime: defaultReloadTime,
     cacheType: 1,
+    cacheOptionsVisible: false,
   };
 
   _updateFromDateTime = (date: Date): void => {
@@ -58,16 +61,38 @@ export class TimeSettings extends React.PureComponent<TimeSettingsProps, TimeSet
     }));
   };
 
-  _setCache = (option: Option): void => {
-    const parsedValue = parseInt(option.value, 10);
-    this.setState(prevState => ({
-      ...prevState,
-      cacheType: parsedValue,
-    }));
+  // @ts-ignore
+  _setCache = (event: MouseEvent<HTMLElement, MouseEvent>): void => {
+    // const value = event.nativeEvent.target.outerText;
+    const value = event.currentTarget();
+    console.log(value);
+
+    const cacheType = 3;
+    this.setState({
+      cacheType,
+    });
+    this._setCacheOptionsNotVisible();
+  };
+
+
+  _setReloadTimeSlider = (_: React.ChangeEvent<HTMLInputElement>, value: number): void => {
+    this.setState({ reloadTime: value });
   };
 
   _save = (_: any): void => {
     this.props.saveSettings(this.state.fromDateTime, this.state.toDateTime, this.state.reloadTime, this.state.cacheType);
+  };
+
+  _setCacheOptionsVisible = () => {
+    this.setState({
+      cacheOptionsVisible: true,
+    });
+  };
+
+  _setCacheOptionsNotVisible = () => {
+    this.setState({
+      cacheOptionsVisible: false,
+    })
   };
 
   render(): React.ReactNode {
@@ -92,6 +117,14 @@ export class TimeSettings extends React.PureComponent<TimeSettingsProps, TimeSet
                   className="form-control input-date-picker"
                   dateFormat="dd. MM .yyyy"
                 />
+                {/*<DateFormatInput*/}
+                {/*name='date-input'*/}
+                {/*value={this.state.fromDateTime}*/}
+                {/*onChange={this._updateFromDateTime}*/}
+                {/*dateFormat="dd. MM. yyyy"*/}
+                {/*min={this.state.fromDateTime}*/}
+                {/*max={new Date()}*/}
+                {/*/>*/}
               </div>
               <div className="input-group mb-3">
                 <div>
@@ -111,33 +144,38 @@ export class TimeSettings extends React.PureComponent<TimeSettingsProps, TimeSet
                 />
               </div>
             </div>
-            <div className="input-group mb-3">
-              <div className="input-group-prepend">
-                <label
-                  className={'input-name'}
-                >
-                  Reload Time (sec)
-                </label>
-              </div>
-              <div className="input-group">
-                <input
-                  type="number"
-                  placeholder={defaultReloadTime.toString()}
-                  required={true}
-                  onChange={this._updateReloadTime}
-                  min={2}
-                  className="form-control input-data"
-                />
-              </div>
+            <div>
+              <label className={'input-name'}>Cache Type</label>
+              <Button
+                aria-haspopup="true"
+                onClick={this._setCacheOptionsVisible}
+              >
+                ...
+              </Button>
+              <Menu
+                id="simple-menu"
+                open={this.state.cacheOptionsVisible}
+                onClose={this._setCacheOptionsNotVisible}
+              >
+                <MenuItem onClick={this._setCache} value={4}>Redis On, EF On</MenuItem>
+                <MenuItem onClick={this._setCache} value={3}>Redis On, EF Off</MenuItem>
+                <MenuItem onClick={this._setCache} value={2}>Redis Off, EF On</MenuItem>
+                <MenuItem onClick={this._setCache} value={1}>Redis Off, EF Off</MenuItem>
+                <MenuItem onClick={this._setCache} value={5}>Special One</MenuItem>
+              </Menu>
             </div>
-            <div className="input-group mb-3">
-              <div className="input-group-column input-group-prepend cache-settings">
-                <div>
-                  <label className={'input-name'}>Cache Type</label>
-                </div>
-                <Select options={cacheOptions} onChange={this._setCache} />
-              </div>
-            </div>
+            <label
+              className={'input-name'}
+            >
+              Reload Time ({this.state.reloadTime} sec)
+            </label>
+            <Slider
+              min={2}
+              max={20}
+              value={this.state.reloadTime}
+              step={1}
+              onChange={this._setReloadTimeSlider}
+            />
             <div className="submit-settings">
               <button
                 type="button"
@@ -145,7 +183,7 @@ export class TimeSettings extends React.PureComponent<TimeSettingsProps, TimeSet
                 onClick={this._save}
               >
                 Submit
-        </button>
+              </button>
             </div>
           </div>
         </div>
