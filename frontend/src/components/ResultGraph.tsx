@@ -49,7 +49,7 @@ export class ResultGraphWrapper extends React.PureComponent<ResultGraphWrapperPr
 
         const data = await fetch(url, {
           headers: {
-            'Access-Control-Allow-Origin': "*"
+            'Access-Control-Allow-Origin': '*',
           },
         });
         const json = await data.json();
@@ -59,7 +59,7 @@ export class ResultGraphWrapper extends React.PureComponent<ResultGraphWrapperPr
         from = from.addDays(1);
         to = to.addDays(1);
       }
-    }, this.props.reloadTime * 1000);
+    },                             this.props.reloadTime * 1000);
 
     from = this.props.fromDate;
     to = this.props.toDate;
