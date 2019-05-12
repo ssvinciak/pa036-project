@@ -109,7 +109,7 @@ export class TimeSettings extends React.PureComponent<TimeSettingsProps, TimeSet
     };
 
     return (
-      <div className="card col-sm-4 col-md-3 col-lg-3 shadow date-time-settings">
+      <div className="card col-sm-3 col-md-3 col-lg-3 align-self-start shadow date-time-settings">
         <div className="card-body">
           <h5 className="card-title">Date and Cache Settings</h5>
           <div>

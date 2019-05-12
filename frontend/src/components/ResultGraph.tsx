@@ -87,7 +87,7 @@ export class ResultGraphWrapper extends React.PureComponent<ResultGraphWrapperPr
   render(): React.ReactNode {
     if (!this.props.wasSubmitted) {
       return (
-        <div className="card col-sm-7 col-md-7 col-lg-7 text-center shadow graph-card">
+        <div className="card col-sm-8 col-md-8 col-lg-8 text-center shadow graph-card">
           <div className="card-body card-body-text">
             <h5 className="card-text">Please setup time and cache settings to display data.</h5>
           </div>
@@ -95,7 +95,7 @@ export class ResultGraphWrapper extends React.PureComponent<ResultGraphWrapperPr
       );
     }
     return (
-      <div className="card col-sm-7 col-md-7 col-lg-7 text-center shadow graph-card">
+      <div className="card col-sm-8 col-md-8 col-lg-8 shadow graph-card">
         <div className="card-body card-body-text">
           <Graph values={this.state.values} />
         </div>
