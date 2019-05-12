@@ -17,7 +17,7 @@ type TimeSettingsState = {
   fromDateTime: Date,
   toDateTime: Date,
   reloadTime: number,
-  cacheType: number,
+  cacheType?: number,
   cacheOptionsVisible: boolean,
 };
 
@@ -35,7 +35,7 @@ export class TimeSettings extends React.PureComponent<TimeSettingsProps, TimeSet
     fromDateTime: defaultFromDate,
     toDateTime: defaultToDate,
     reloadTime: defaultReloadTime,
-    cacheType: 1,
+    cacheType: 0,
     cacheOptionsVisible: false,
   };
 
@@ -81,25 +81,26 @@ export class TimeSettings extends React.PureComponent<TimeSettingsProps, TimeSet
   };
 
   private renderSelectItems = (): React.ReactNode => {
-    const options = cacheOptions.map((c) => (
-      <MenuItem
-        value={c.value}
-        key={c.value}
-      >
-        {c.label}
-      </MenuItem>
-    ));
-
     const placeholder = (
       <MenuItem
-        value=""
+        value="0"
         key={0}
+        disabled={true}
       >
         Enter value
       </MenuItem>
     );
+    const options = [
+      placeholder,
+      ...cacheOptions.map((c) => (
+        <MenuItem
+          value={c.value}
+          key={c.value}
+        >
+          {c.label}
+        </MenuItem>
+      ))];
 
-    options.unshift(placeholder);
     return options;
   }
 
@@ -157,6 +158,7 @@ export class TimeSettings extends React.PureComponent<TimeSettingsProps, TimeSet
                 autoWidth={true}
                 className={'input-data'}
                 classes={selectStyles}
+                displayEmpty={true}
               >
                 {this.renderSelectItems()}
               </Select>
