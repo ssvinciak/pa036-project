@@ -8,7 +8,6 @@ import '../sticky-footer.css';
 import { TimeSettings } from './TimeSettings';
 import { ResultGraphWrapper } from './ResultGraph';
 import { AppSettings } from '../models/AppSettings';
-import 'react-select';
 
 type AppState = {
   settings: AppSettings,

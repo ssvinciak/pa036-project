@@ -4,10 +4,11 @@ import {
   defaultFromDate,
   defaultReloadTime,
   defaultToDate,
+  defaultMinReloadTime,
+  defaultMaxReloadTime,
 } from '../constants/defaultTimeSettings';
-import ReactDatePicker from 'react-datepicker';
-import 'react-dropdown/style.css';
 import Slider from '@material-ui/lab/Slider/Slider';
+import { DateFormatInput } from 'material-ui-next-pickers';
 import { Select } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
 import { cacheOptions } from '../constants/cacheVersions';
@@ -63,13 +64,10 @@ export class TimeSettings extends React.PureComponent<TimeSettingsProps, TimeSet
 
   _setCache = (event: any): void => {
     const value = event.target.value;
-    console.log(value);
 
-    const cacheType = 3;
     this.setState(() => ({
-      cacheType,
+      cacheType: value,
     }));
-    this._setCacheOptionsNotVisible();
   };
 
   _setReloadTimeSlider = (_: React.ChangeEvent<HTMLInputElement>, value: number): void => {
@@ -82,86 +80,102 @@ export class TimeSettings extends React.PureComponent<TimeSettingsProps, TimeSet
     this.props.saveSettings(this.state.fromDateTime, this.state.toDateTime, this.state.reloadTime, this.state.cacheType);
   };
 
-  _setCacheOptionsVisible = () => {
-    this.setState(() => ({
-      cacheOptionsVisible: true,
-    }));
-  };
+  private renderSelectItems = (): React.ReactNode => {
+    const options = cacheOptions.map((c) => (
+      <MenuItem
+        value={c.value}
+        key={c.value}
+      >
+        {c.label}
+      </MenuItem>
+    ));
 
-  _setCacheOptionsNotVisible = () => {
-    this.setState(() => ({
-      cacheOptionsVisible: false,
-    }));
-  };
+    const placeholder = (
+      <MenuItem
+        value=""
+        key={0}
+      >
+        Enter value
+      </MenuItem>
+    );
+
+    options.unshift(placeholder);
+    return options;
+  }
 
   render(): React.ReactNode {
+    const selectStyles = {
+      selectMenu: 'input-data',
+    };
+
     return (
       <div className="card col-sm-4 col-md-3 col-lg-3 shadow date-time-settings">
         <div className="card-body">
           <h5 className="card-title">Date and Cache Settings</h5>
           <div>
-            <div>
-              <div className="input-group mb-3">
-                <div>
-                  <label
-                    className={'input-name'}
-                  >
-                    Begin date
-                  </label>
-                </div>
-                <ReactDatePicker
-                  onChange={this._updateFromDateTime}
-                  selected={this.state.fromDateTime}
-                  maxDate={new Date()}
-                  className="form-control input-date-picker"
-                  dateFormat="dd. MM .yyyy"
-                />
-              </div>
-              <div className="input-group mb-3">
-                <div>
-                  <label
-                    className={'input-name'}
-                  >
-                    End date
-                  </label>
-                </div>
-                <ReactDatePicker
-                  onChange={this._updateToDateTime}
-                  selected={this.state.toDateTime}
-                  minDate={this.state.fromDateTime}
-                  maxDate={new Date()}
-                  className="form-control input-date-picker"
-                  dateFormat="dd. MM. yyyy"
-                />
-              </div>
+            <div className="input-group mb-3">
+              <label
+                className={'input-label'}
+              >
+                Begin date
+              </label>
+              <DateFormatInput
+                name="date-input"
+                value={this.state.fromDateTime}
+                onChange={this._updateFromDateTime}
+                dateFormat="dd. MM .yyyy"
+                max={new Date()}
+              />
             </div>
-            <label
-              className={'input-name'}
-            >
-              Cache Type
-            </label>
-            <Select
-              value={this.state.cacheType}
-              onChange={this._setCache}
-            >
-              {
-                cacheOptions.map(c => {
-                  return <MenuItem value={c.value} onSelect={this._setCache} key={c.value}>{c.label}</MenuItem>;
-                })
-              }
-            </Select>
-            <label
-              className={'input-name'}
-            >
-              Reload Time ({this.state.reloadTime} sec)
-            </label>
-            <Slider
-              min={2}
-              max={20}
-              value={this.state.reloadTime}
-              step={1}
-              onChange={this._setReloadTimeSlider}
-            />
+            <div className="input-group mb-3">
+              <div>
+                <label
+                  className={'input-label'}
+                >
+                  End date
+                </label>
+              </div>
+              <DateFormatInput
+                name="date-input"
+                value={this.state.toDateTime}
+                onChange={this._updateToDateTime}
+                dateFormat="dd. MM .yyyy"
+                min={this.state.fromDateTime}
+                max={new Date()}
+                className={'input-data'}
+              />
+            </div>
+            <div className="input-group mb-3">
+              <label
+                className={'input-label'}
+              >
+                Cache Type
+              </label>
+              <Select
+                value={this.state.cacheType}
+                onChange={this._setCache}
+                autoWidth={true}
+                className={'input-data'}
+                classes={selectStyles}
+              >
+                {this.renderSelectItems()}
+              </Select>
+            </div>
+            <div className="input-group input-group-centered mb-3">
+              <label
+                className={'input-label'}
+              >
+                Reload Time ({this.state.reloadTime} sec)
+              </label>
+              <Slider
+                min={defaultMinReloadTime}
+                max={defaultMaxReloadTime}
+                value={this.state.reloadTime}
+                step={1}
+                onChange={this._setReloadTimeSlider}
+                className={'input-data'}
+              />
+            </div>
             <div className="submit-settings">
               <button
                 type="button"

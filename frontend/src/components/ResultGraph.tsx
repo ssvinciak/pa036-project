@@ -41,8 +41,6 @@ export class ResultGraphWrapper extends React.PureComponent<ResultGraphWrapperPr
   };
 
   componentDidMount(): void {
-    console.log('graph did mount');
-
     const intervalId = setInterval(async () => {
       if (this.props.wasSubmitted) {
         const url = getTemperatureUrl(this.props.cacheType, from, to);
@@ -56,10 +54,11 @@ export class ResultGraphWrapper extends React.PureComponent<ResultGraphWrapperPr
         this.setState(() => ({
           values: convertToDataModel(json),
         }));
+
         from = from.addDays(1);
         to = to.addDays(1);
       }
-    },                             this.props.reloadTime * 1000);
+    }, this.props.reloadTime * 1000);
 
     from = this.props.fromDate;
     to = this.props.toDate;
@@ -96,8 +95,10 @@ export class ResultGraphWrapper extends React.PureComponent<ResultGraphWrapperPr
       );
     }
     return (
-      <div className={'col-sm-8 col-md-8 col-lg-8 graph'} >
-        <Graph values={this.state.values} />
+      <div className="card col-sm-7 col-md-7 col-lg-7 text-center shadow graph-card">
+        <div className="card-body card-body-text">
+          <Graph values={this.state.values} />
+        </div>
       </div>
     );
   }

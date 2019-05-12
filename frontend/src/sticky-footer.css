@@ -45,32 +45,19 @@ body {
   justify-content: center;
 }
 
-.input-name {
+.input-label {
   width: 150px;
   text-align: left;
 }
 
 .input-data {
-  width: 150px;
+  width: 230px !important;
 }
 
 .submit-settings {
   margin-top: 20px;
   display: flex;
   justify-content: center;
-}
-
-.input-date-picker {
-  padding-right: 38px;
-  background-image: url("../public/calendar-solid.png");
-  background-repeat: no-repeat;
-  background-position: 90% 50%;
-}
-
-.input-group-column {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
 }
 
 .navbar-header {
@@ -87,10 +74,6 @@ card {
   justify-content: center;
 }
 
-.graph {
-  margin-top: 20px;
-}
-
 .date-time-settings {
   margin-top: 20px;
   margin-left: 20px;
@@ -99,4 +82,12 @@ card {
 .graph-card {
   margin-top: 20px;
   margin-left: 20px;
+}
+
+.DateFormatInput-input-4 {
+  height: 32px !important;
+}
+
+.input-group-centered {
+  align-items: center !important;
 }
